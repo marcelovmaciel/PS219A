@@ -47,7 +47,6 @@ filtered1620df = @subset(df_nm1620, (:candidateproportions .>= 0.05))
 # https://www.census.gov/programs-surveys/popest/technical-documentation/research/evaluation-estimates/2020-evaluation-estimates/2010s-counties-total.html
 
 popdfpath = dataspath * "/co-est2020.csv"
-
 popdf = DataFrame(rcopy(read_csv(popdfpath, locale = locale(encoding = "UTF-8") )))
 
 popdf |> browse
@@ -64,21 +63,37 @@ popdf_nm.STNAME = map(uppercase, popdf_nm.STNAME )
 popdf_nm.CTYNAME = map(x->rcopy(stri_trans_toupper(x)), popdf_nm.CTYNAME)
 
 popdf_nm.CTYNAME = map(x->rstrip(replace(x, "COUNTY"=> "")), popdf_nm.CTYNAME)
-
-
 popdf_nm.CTYNAME = map(x->rstrip(replace(x, "DO\xf1A ANA"=> "DONA ANA")), popdf_nm.CTYNAME)
 
-
-
 pop16 = Dict(x.CTYNAME => x.POPESTIMATE2016 for x in eachrow(popdf_nm))
-Set(keys(pop16) |> collect)
-Set(unique(filtered1620df.county_name))
+
 setdiff(Set(keys(pop16) |> collect), Set(unique(filtered1620df.county_name)))
 delete!(pop16, "NEW MEXICO")
 
-filtered1620df
+pop20 = Dict(x.CTYNAME => x.POPESTIMATE2020 for x in eachrow(popdf_nm))
+delete!(pop20, "NEW MEXICO")
 
-# TODO: create a loop that will fill a vector that will be the pop col
+popsizes = Float64[]
+
+for r in eachrow(filtered1620df)
+    if r.year == float(2016)
+        popsize = pop16[r.county_name]
+        push!(popsizes, popsize)
+    elseif r.year == float(2020)
+        popsize = pop20[r.county_name]
+        push!(popsizes, popsize)
+    end
+end
+
+filtered1620df.popsizes = popsizes
+
+filtered1620df |> browse
+
+filtered1620df.popsizes
+
+# ** Senate 2014-2020 data
+
+
 
 
 
