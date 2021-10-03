@@ -2,3 +2,8 @@
 
 - 2 chapters a week
 - Conditional Probability + Normality
+- excel wants columns to be adjacent
+- homework + thems + class exercise
+
+
+- Put everything in standard data format

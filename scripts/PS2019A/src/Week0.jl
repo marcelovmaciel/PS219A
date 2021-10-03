@@ -6,8 +6,13 @@ using RCall
 using StatsBase
 using Base.Filesystem
 import FreqTables as Freq
+
 @rlibrary readr
 @rlibrary stringi
+@rimport var"data.table" as dt
+
+
+
 
 # * County level presidential data stuff
 
@@ -87,20 +92,152 @@ end
 
 filtered1620df.popsizes = popsizes
 
-filtered1620df |> browse
 
-filtered1620df.popsizes
+filtered1620df |> browse
+dfnm16 = filter(x -> ((x.year == 2016) ),
+                    filtered1620df)
+
+
+# TODO: Actually make this tidy
+
+kindatidy = let
+    dfnm16 = filter(x -> ((x.year == 2016) ),
+                    filtered1620df)
+    dfnm20 = filter(x -> ((x.year == 2020) ),
+                    filtered1620df)
+
+    clean16 = unique(dfnm16)
+    clean20 = unique(dfnm20)
+    innerjoin(clean16, clean20,
+                   on=:county_name,
+                   renamecols = "_2016"=>"_2020")
+end
+
+kindatidy |> names
+
+for c in [:year_2016, :year_2020]
+    select!(kindatidy, Not(c))
+end
+
+kindatidy |> browse
 
 # ** Senate 2014-2020 data
 
+# *** 2014
+senate14df = let 
+    County = ["Bernalillo","Catron", "Chaves", "Cibola", "Colfax", "Curry",
+    "DeBaca", "Dona Ana", "Eddy", "Grant", "Guadalupe", "Harding", "Hidalgo",
+    "Lea", "Lincoln", "Los Alamos", "Luna", "McKinley", "Mora", "Otero", "Quay",
+    "Rio Arriba", "Roosevelt", "Sandoval", "San Juan", "San Miguel", "Santa Fe",
+    "Sierra", "Socorro", "Taos", "Torrance", "Union", "Valencia"]
+
+    Senators = ("ALLEN E. WEH (REP)", "TOM UDALL (DEM)")
+
+    CountySenatorsPairs = ["Bernalillo"=> [73751, 97760], "Catron" => [1156,543],
+                           "Chaves" => [8801,4183], "Cibola" => [2045,3638], "Colfax" => [1878, 2394],
+                           "Curry"=> [5612, 2412], "DeBaca"=> [462, 321], "Dona Ana"=> [18150, 23111],
+                           "Eddy"=> [7545, 4044], "Grant"=> [3863, 5323], "Guadalupe"=> [455, 1378],
+                           "Harding"=> [256, 260], "Hidalgo"=> [667, 784], "Lea"=> [6739, 2360],
+                           "Lincoln"=> [4035, 2131], "Los Alamos"=> [3534, 4434], "Luna"=> [2388, 2467],
+                           "McKinley"=> [3481, 11334], "Mora"=> [585, 1528], "Otero"=> [8158, 4609],
+                           "Quay"=> [1557, 1125], "Rio Arriba"=> [2503, 7665], "Roosevelt"=> [2531, 1254],
+                           "San Juan"=> [18137, 11904], "San Miguel"=> [1842, 6199], "Sandoval"=> [18558,
+                                                                                                   20140], "Santa Fe"=> [11418, 37657], "Sierra"=> [2120, 1575], "Socorro"=> [2152,
+                                                                                                                                                                              3137], "Taos"=> [2026, 8698], "Torrance"=> [2624, 1999], "Union"=> [874, 505],
+                           "Valencia" => [9194, 9537]] |> Dict
+
+
+    CountySenatorsPreDf= Dict{String, Vector{Float64}}()
+
+    for (k,v) in pairs(CountySenatorsPairs)
+        CountySenatorsPreDf[k] = Float64[float(v[1]),
+                                         float(v[2]),
+                                         float(v[1]) + float(v[2]),
+                                         float(v[1])/(float(v[1]) + float(v[2])),
+                                         float(v[2])/(float(v[1]) + float(v[2]))]
+    end
 
 
 
+    senate2014 = rcopy(dt.transpose(DataFrame(CountySenatorsPreDf),
+                                    var"keep.names" = "col"))
 
+    DataFramesMeta.rename!(senate2014, [:V1=>"Senate 2014: ALLEN E. WEH (REP)",
+                                        :V2=>"Senate 2014: TOM UDALL (DEM)",
+                                        :V3=>"Senate 2014: Total",
+                                        :V4=>"Senate 2014 percentage: ALLEN E. WEH (REP)",
+                                        :V5=>"Senate 2014 percentage: TOM UDALL (DEM)"])
+    senate2014
+end
+
+
+
+# *** 2020
+
+senate20df = let
+
+    County = ["Bernalillo","Catron", "Chaves", "Cibola",
+    "Colfax", "Curry", "DeBaca", "Dona Ana", "Eddy", "Grant", "Guadalupe",
+    "Harding", "Hidalgo", "Lea", "Lincoln", "Los Alamos", "Luna", "McKinley",
+    "Mora", "Otero", "Quay", "Rio Arriba", "Roosevelt", "Sandoval", "San Juan",
+    "San Miguel", "Santa Fe", "Sierra", "Socorro", "Taos", "Torrance", "Union",
+              "Valencia"]
+
+    Ben_Ray_Lujan_DEM_percent = [56.7, 23.5, 27.6, 50.5, 42.3, 28.6, 25.2, 57.6,
+    23.2, 51.4, 57, 31.2, 41.3, 19.6, 28.4, 57.1, 43, 65.2, 62.3, 34.2, 31.5,
+    64, 27.2, 49.5, 33.2, 67.9, 73.9, 35.9, 49.5, 75.8, 30, 22.5, 41.5]
+
+   Ben_Ray_Lujan_DEM_Votes = [178881, 543, 6143, 4478, 2549, 4261, 228, 46918,
+       5301, 7377, 1240, 157, 793, 4018, 2915, 7018, 3425, 17129, 1674, 7987,
+       1214, 10615, 1774, 37782, 17250, 7817, 60432, 2127, 3529, 12986, 2179,
+       399, 13344]
+
+   Mark_Ronchetti_GOP_percent = [40.6, 73.5, 70.2, 47.2, 55.1, 67.7, 72.3, 38.9,
+       74.8, 46.1, 41.2, 67.8, 56.2, 77.9, 69.3, 39.6, 54.2, 31.7, 35.6, 62.7,
+       66.1, 34.3, 69, 48.1, 63.8, 30.8, 24.2, 61.7, 47.5, 22.1, 67.5, 74.6,
+       56.2]
+
+   Mark_Ronchetti_GOP_Votes = [128042, 1694, 15624, 4187, 3314, 10094, 653,
+       31698, 17079, 6610, 898, 341, 1079, 15950, 7102, 4866, 4319, 8329, 957,
+       14627, 2543, 5689, 4505, 36666, 33145, 3545, 19814, 3653, 3384, 3793,
+       4904, 1323, 18056]
+
+   Bob_Walsh_LIB_percent = [2.7, 3, 2.1, 2.3, 2.6, 3.8, 2.4, 3.5, 2, 2.5, 1.8,
+       1, 2.4, 2.5, 2.2, 3.4, 2.8, 3.1, 2, 3.1, 2.4, 1.6, 3.9, 2.4, 3.1, 1.4,
+       1.9, 2.4, 2.9, 2, 2.5, 2.9, 2.3]
+
+   Bob_Walsh_LIB_Votes = [8606, 69, 475, 205, 156, 561, 22, 2890, 463, 352, 39,
+       5, 47, 508, 230, 415, 222, 809, 55, 715, 91, 271, 252, 1841, 1588, 159,
+       1563, 140, 210, 346, 184, 51, 731]
+
+
+
+   senate2020vals = zip([Ben_Ray_Lujan_DEM_percent, Ben_Ray_Lujan_DEM_Votes,
+                 Mark_Ronchetti_GOP_percent, Mark_Ronchetti_GOP_Votes,
+                 Bob_Walsh_LIB_percent, Bob_Walsh_LIB_Votes]...)
+
+    senate2020 = begin
+       Dict(Pair(k,[v...]) for (k,v) in zip(County, senate2020vals)) |>
+           DataFrame |> df -> dt.transpose(df, var"keep.names" = "col") |> rcopy
+   end
+
+   renaming_scheme = [:V1=>"Senate 2020 percentage: Ben Ray Lujan (DEM)",
+    :V2=>"Senate 2020: Ben Ray Lujan (DEM)",
+    :V3=>"Senate 2020 percentage: Mark Ronchetti (REP)",
+    :V4=>"Senate 2020: Mark Ronchetti (REP)",
+    :V5=>"Senate 2020 percentage: Bob Walsh (LIB)",
+    :V6=>"Senate 2020: Bob Walsh (LIB)"]
+
+   DataFramesMeta.rename!(senate2020, renaming_scheme)
+
+   senate2020
+end
+
+# TODO: save the proper tidy dataframe 
 # ** Saving
 R"write.csv($df_nm, file = '../../../data/nm_counties.csv'  )"
 R"write.csv($filtered1620df, file = '../../../data/nm_counties_1620.csv'  )"
-
+R"write.csv($kindatidy, file = '../../../data/nm_counties_tidy.csv'  )"
 
 
 # * garbarge to look later
