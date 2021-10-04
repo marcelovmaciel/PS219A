@@ -24,6 +24,8 @@ readdir(dataspath)
 datapath = dataspath * "/dataverse_files/countypres_2000-2020.csv"
 df = DataFrame(rcopy(read_csv(datapath)))
 
+
+
 # ** Getting New Mexico stuff
 df_nm= @subset(df, :state .== "NEW MEXICO")
 browse(df_nm)
@@ -44,6 +46,9 @@ dropmissing!(df_nm1620, [:totalvotes])
 
 # ** Droping candidates below 5%
 df_nm1620.candidateproportions = map(x->x.candidatevotes/x.totalvotes, eachrow(df_nm1620))
+
+
+
 
 filtered1620df = @subset(df_nm1620, (:candidateproportions .>= 0.05))
 
@@ -92,34 +97,44 @@ end
 
 filtered1620df.popsizes = popsizes
 
-
 filtered1620df |> browse
 dfnm16 = filter(x -> ((x.year == 2016) ),
                     filtered1620df)
 
+other16 = filter(x-> x.candidate ==  "OTHER" && x.party == "OTHER", dfnm16 )
+rep16 = filter(x-> x.candidate ==  "DONALD TRUMP" && x.party == "REPUBLICAN", dfnm16 )
+dem16 = filter(x-> x.candidate ==  "HILLARY CLINTON" && x.party == "DEMOCRAT", dfnm16 )
 
-# TODO: Actually make this tidy
+otherrep16 = innerjoin(other16[!,[:county_name, :candidatevotes, :candidateproportions]],
+                 rep16[!,[:county_name, :candidatevotes, :candidateproportions]],
+                 on =:county_name,
+                 renamecols = "_Presidential2016_Other" => "_Presidential2016_DonaldTrump")
 
-kindatidy = let
-    dfnm16 = filter(x -> ((x.year == 2016) ),
-                    filtered1620df)
-    dfnm20 = filter(x -> ((x.year == 2020) ),
-                    filtered1620df)
 
-    clean16 = unique(dfnm16)
-    clean20 = unique(dfnm20)
-    innerjoin(clean16, clean20,
-                   on=:county_name,
-                   renamecols = "_2016"=>"_2020")
-end
+tidy16 = innerjoin(otherrep16, dem16[!,[:county_name, :candidatevotes, :candidateproportions]], on = :county_name)
 
-kindatidy |> names
+DataFramesMeta.rename!(tidy16, [:candidatevotes => "candidatevotes_Presidential2016_HillaryClinton",
+                              :candidateproportions => "candidateproportions_Presidential2016_HillaryClinton"])
 
-for c in [:year_2016, :year_2020]
-    select!(kindatidy, Not(c))
-end
+tidy16[!,"popSizes_2016"] = other16[!,"popsizes"]
+tidy16[!, "totalVotes_2016"] = other16[!, "totalvotes"]
 
-kindatidy |> browse
+dfnm20 = filter(x -> ((x.year == 2020) ),
+                filtered1620df)
+
+rep20 = filter(x-> x.candidate ==  "DONALD J TRUMP" && x.party == "REPUBLICAN", dfnm20 )
+dem20 = filter(x-> x.candidate ==  "JOSEPH R BIDEN JR" && x.party == "DEMOCRAT", dfnm20 )
+tidyrepdem20 = innerjoin(rep20[!,[:county_name, :candidatevotes, :candidateproportions]],
+                 dem20[!,[:county_name, :candidatevotes, :candidateproportions]],
+                 on =:county_name,
+                 renamecols = "_Presidential2020_DonaldTrump" => "_Presidential2016_JosephBiden")
+
+tidyrepdem20[!,"popSizes_2020"] = rep20[!,"popsizes"]
+tidyrepdem20[!, "totalVotes_2020"] = rep20[!, "totalvotes"]
+
+
+tidy1620 = innerjoin(tidy16, tidyrepdem20, on = :county_name) 
+
 
 # ** Senate 2014-2020 data
 
@@ -135,7 +150,7 @@ senate14df = let
 
     CountySenatorsPairs = ["Bernalillo"=> [73751, 97760], "Catron" => [1156,543],
                            "Chaves" => [8801,4183], "Cibola" => [2045,3638], "Colfax" => [1878, 2394],
-                           "Curry"=> [5612, 2412], "DeBaca"=> [462, 321], "Dona Ana"=> [18150, 23111],
+                           "Curry"=> [5612, 2412], "De Baca"=> [462, 321], "Dona Ana"=> [18150, 23111],
                            "Eddy"=> [7545, 4044], "Grant"=> [3863, 5323], "Guadalupe"=> [455, 1378],
                            "Harding"=> [256, 260], "Hidalgo"=> [667, 784], "Lea"=> [6739, 2360],
                            "Lincoln"=> [4035, 2131], "Los Alamos"=> [3534, 4434], "Luna"=> [2388, 2467],
@@ -171,13 +186,17 @@ senate14df = let
 end
 
 
+senate14df[!, :county_name] = map(x->rcopy(stri_trans_toupper(x)), senate14df.col)
+select!(senate14df, Not(:col))
+
+
 
 # *** 2020
 
 senate20df = let
 
     County = ["Bernalillo","Catron", "Chaves", "Cibola",
-    "Colfax", "Curry", "DeBaca", "Dona Ana", "Eddy", "Grant", "Guadalupe",
+    "Colfax", "Curry", "De Baca", "Dona Ana", "Eddy", "Grant", "Guadalupe",
     "Harding", "Hidalgo", "Lea", "Lincoln", "Los Alamos", "Luna", "McKinley",
     "Mora", "Otero", "Quay", "Rio Arriba", "Roosevelt", "Sandoval", "San Juan",
     "San Miguel", "Santa Fe", "Sierra", "Socorro", "Taos", "Torrance", "Union",
@@ -210,8 +229,6 @@ senate20df = let
        5, 47, 508, 230, 415, 222, 809, 55, 715, 91, 271, 252, 1841, 1588, 159,
        1563, 140, 210, 346, 184, 51, 731]
 
-
-
    senate2020vals = zip([Ben_Ray_Lujan_DEM_percent, Ben_Ray_Lujan_DEM_Votes,
                  Mark_Ronchetti_GOP_percent, Mark_Ronchetti_GOP_Votes,
                  Bob_Walsh_LIB_percent, Bob_Walsh_LIB_Votes]...)
@@ -233,11 +250,20 @@ senate20df = let
    senate2020
 end
 
-# TODO: save the proper tidy dataframe 
+senate20df[!, :county_name] = map(x->rcopy(stri_trans_toupper(x)), senate20df.col)
+select!(senate20df, Not(:col))
+
+
+# Putting everything together
+prefinaltidy = innerjoin(tidy1620, senate14df, on = :county_name)
+finaltidy = innerjoin(prefinaltidy, senate20df, on = :county_name)
+
+
+# TODO: add population size 2014
 # ** Saving
 R"write.csv($df_nm, file = '../../../data/nm_counties.csv'  )"
 R"write.csv($filtered1620df, file = '../../../data/nm_counties_1620.csv'  )"
-R"write.csv($kindatidy, file = '../../../data/nm_counties_tidy.csv'  )"
+R"write.csv($finaltidy, file = '../../../data/nm_counties_tidy.csv'  )"
 
 
 # * garbarge to look later
