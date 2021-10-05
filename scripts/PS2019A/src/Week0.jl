@@ -12,8 +12,6 @@ import FreqTables as Freq
 @rimport var"data.table" as dt
 
 
-
-
 # * County level presidential data stuff
 
 # ** Reading the data
@@ -23,8 +21,6 @@ const dataspath = "../../../data"
 readdir(dataspath)
 datapath = dataspath * "/dataverse_files/countypres_2000-2020.csv"
 df = DataFrame(rcopy(read_csv(datapath)))
-
-
 
 # ** Getting New Mexico stuff
 df_nm= @subset(df, :state .== "NEW MEXICO")
@@ -46,9 +42,6 @@ dropmissing!(df_nm1620, [:totalvotes])
 
 # ** Droping candidates below 5%
 df_nm1620.candidateproportions = map(x->x.candidatevotes/x.totalvotes, eachrow(df_nm1620))
-
-
-
 
 filtered1620df = @subset(df_nm1620, (:candidateproportions .>= 0.05))
 
@@ -76,6 +69,20 @@ popdf_nm.CTYNAME = map(x->rstrip(replace(x, "COUNTY"=> "")), popdf_nm.CTYNAME)
 popdf_nm.CTYNAME = map(x->rstrip(replace(x, "DO\xf1A ANA"=> "DONA ANA")), popdf_nm.CTYNAME)
 
 pop16 = Dict(x.CTYNAME => x.POPESTIMATE2016 for x in eachrow(popdf_nm))
+
+
+popdf_nm |> browse
+
+Symbol(names(popdf_nm)[1])
+
+popdf14 = copy(popdf_nm)
+for i in names(select(select(popdf_nm, Not(:CTYNAME)), Not(:POPESTIMATE2014)))
+    select!(popdf14, Not(Symbol(i)))
+end
+
+
+DataFramesMeta.rename!(popdf14, [:CTYNAME => :county_name])
+
 
 setdiff(Set(keys(pop16) |> collect), Set(unique(filtered1620df.county_name)))
 delete!(pop16, "NEW MEXICO")
@@ -189,8 +196,6 @@ end
 senate14df[!, :county_name] = map(x->rcopy(stri_trans_toupper(x)), senate14df.col)
 select!(senate14df, Not(:col))
 
-
-
 # *** 2020
 
 senate20df = let
@@ -253,11 +258,11 @@ end
 senate20df[!, :county_name] = map(x->rcopy(stri_trans_toupper(x)), senate20df.col)
 select!(senate20df, Not(:col))
 
-
 # Putting everything together
 prefinaltidy = innerjoin(tidy1620, senate14df, on = :county_name)
 finaltidy = innerjoin(prefinaltidy, senate20df, on = :county_name)
 
+browse(finaltidy)
 
 # TODO: add population size 2014
 # ** Saving
