@@ -10,7 +10,7 @@ using Distributions
 # * Them 3.4
 
 # 1. p = 0.5, n = 7, k = 4, thus Pr(X=k) =
-pdf(Binomial(6,0.5), 4)
+pdf(Binomial(7,0.5), 4)
 # 2. p = 0.5, n = 6, k = 4, thus Pr(X=k) =
 pdf(Binomial(6,0.5), 4)
 
