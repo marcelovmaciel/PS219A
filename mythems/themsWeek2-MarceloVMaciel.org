@@ -7,4 +7,10 @@ They are comparing the whole group, men, average with a subgroup average which w
 ** 2
 There are confounders. The argument is that orchestra conducting has an effect on life expectancy. However, if you remember that social class has an effect on the probability of being an orchestra conductor and on life expectancy the previous causal relationship between orchestra conducting and life expectancy will likely turn out to be spurious. Thus, I would control for this confounder. A regression which added the variable 'social class' would likely suffice.
 
-*
+* Them 3.2
+** 1
+(0.99 * 0.8) + (0.01 * 0.1) = 0.793
+** 2
+(0.001)/0.793 = 0.00126
+** 3
+(0.009)/(0.198 + 0.009)= 0.043
