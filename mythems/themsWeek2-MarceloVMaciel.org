@@ -13,4 +13,9 @@ There are confounders. The argument is that orchestra conducting has an effect o
 ** 2
 (0.001)/0.793 = 0.00126
 ** 3
-(0.009)/(0.198 + 0.009)= 0.043
+In the text it seems to be P(I|A) =
+(0.009)/(0.198 + 0.009)= 0.043; in the hint it says that what is being asked is P(A|I), that is given in the problem statement: given that the Judge considers someone is innocent the probability of someone being acquitted is 0.9.
+* Them 3.3
+I'll do both parts at the same time. Missing in those tables are the proportion of papers that got rejected per field. That is, though 38% of the papers that got accepted were about comparative politics it is possible that the volume of papers submitted in this area is very high. On the other hand, though formal theory only accounts for 3% of the accepted papers by field the volume of papers submitted in this field is likely to be very low in comparison to other areas. All in all, what would I choose given the information in the tables? For each observation I would need to input the missing rejection information. Then I would multiply the probability of being accepted with the ratio of each field/approach. Given that the discipline focuses mostly on the three main fields (comparative / national politics / international relations) and mostly trains quantitatives researchers I believe that a combination of Normative Theory or Formal Theory field and Formal or Interpretive approach would be a safer bet.
+
+* Them 3.4
