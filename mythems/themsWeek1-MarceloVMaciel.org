@@ -1,0 +1,46 @@
+#+TITLE: Take home exams Week1 Marcelo V Maciel
+
+* Answer to THEM 1.1-thinking about c&t evals-rev
+Reporting the mean,mode,median and the standard deviation will give a better
+description of the evaluation than only reporting the mean, which is not robust
+to outliers.
+
+* Answers to THEM 1.3-Categorizing High School Students-rev
+1. Those whose main purpose is purpose is getting a diploma, those whose main
+   purpose is learning, and others.
+2. Yes, though one can have many purposes, it is only possible to have one main
+   purpose. If a student is an element of one category than it is not in another category. Thus, it is mutually exhaustive.
+3. No, a student can, say, be smart and rich at the same time.
+4. If I understood correctly, no. One can be a loadie and a soshe at the same
+   time. At least in Brazil it is very common for socialites to be addicted to
+   coke, for instance.
+5. Yes, because I added the "others" category.
+6. Yes, because "everybody else" is a category.
+7. No, because there are many other types of students.
+8. Slackers, Normies, Strivers. Slackers don't put up much effort in their
+   studies and barely pass. Normies put a normal amount. Strivers put a great
+   deal of effort. That can be made logically exhaustive and mutually exhaustive
+   by defining intervals of weekly study time: [0,2] hours => Slacker, [3,12]
+   hours => Normie, > 12 hours => Striver.
+9. Done in 8.
+10. Height.
+
+
+* Answer to THEM 1.4-operationalizing the Lipset hypothesis-REV
+Average wealth is not appropriate to disambiguate a rich society from "[...] A
+society divided between a large impoverished mass and a small favored elite".
+
+
+* Answers to THEM 2.2-Plotting a Height Distribution-rev
+1. 1.658;
+2. 1.615;
+3. 1.65;
+4. 0.98
+5. Figure follows in a separate file;
+6. That there is a typo in the dataset. There is no woman of height equal to 2.5 meters.
+* Answers to THEM 11.2-HH Index and Lead Aid Donor (Steinwand, IO, 2015)
+1.
+2. \(HH = \sum_{1}^{n}s^{2}\), where n is the number of donors and s is the donor share. Since we already know that one donor got a \(s \gtapprox 0.5\). Now suppose
+3. 1
+4. One of the components of the definition of being a lead donor is that the
+   country has a high H-H. The higher the H-H index the lower the donor fragmentation. Since the country must be above the sample median in this component to be considered in a exclusive donor relationship it is expected that this class will have a distribution of centered around a H-H higher than its complement in the dataset.

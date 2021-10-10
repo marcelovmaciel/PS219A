@@ -261,14 +261,17 @@ select!(senate20df, Not(:col))
 # Putting everything together
 prefinaltidy = innerjoin(tidy1620, senate14df, on = :county_name)
 finaltidy = innerjoin(prefinaltidy, senate20df, on = :county_name)
+finaltidypop14too = innerjoin(finaltidy, popdf14, on = :county_name)
 
-browse(finaltidy)
+
+popdf14
+browse(finaltidypop14too)
 
 # TODO: add population size 2014
 # ** Saving
 R"write.csv($df_nm, file = '../../../data/nm_counties.csv'  )"
 R"write.csv($filtered1620df, file = '../../../data/nm_counties_1620.csv'  )"
-R"write.csv($finaltidy, file = '../../../data/nm_counties_tidy.csv'  )"
+R"write.csv($finaltidypop14too, file = '../../../data/nm_counties_tidy.csv'  )"
 
 
 # * garbarge to look later
