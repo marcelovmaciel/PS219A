@@ -1,0 +1,10 @@
+#+TITLE: Take home exams Week2 Marcelo Veloso Maciel
+
+
+* Them 3.1
+** 1
+They are comparing the whole group, men, average with a subgroup average which was already taken into account when calculating the whole group average. A better comparison would be between the subgroup of orchestra conductors versus its complement.  Nevertheless, the comparison would still be fraught with difficulties and would require some kind of matching between the units of those two groups.
+** 2
+There are confounders. The argument is that orchestra conducting has an effect on life expectancy. However, if you remember that social class has an effect on the probability of being an orchestra conductor and on life expectancy the previous causal relationship between orchestra conducting and life expectancy will likely turn out to be spurious. Thus, I would control for this confounder. A regression which added the variable 'social class' would likely suffice.
+
+*
