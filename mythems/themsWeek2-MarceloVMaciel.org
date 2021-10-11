@@ -23,6 +23,47 @@ I'll do both parts at the same time. Missing in those tables are the proportion 
 1. p = 0.5, n = 7,  k = 4, thus Pr(X>=k) = 0.5
 2. p = 0.5, n = 6, k = 4,  thus Pr(X>=k) = 0.344
 3. p = 0.5, n = 5, k = 3, thus Pr(X>=k) = 0.5
-4. p = 0.5, n = 4, k = 3, thus Pr(X>=k) = 0.25
+4. p = 0.5, n = 4, k = 3, thus Pr(X>=k) = 0.313
 5. p = 0.5, n = 3, k = 3, thus Pr(X>=k) = 0.125
 6. the probability is zero. They have already lost 4 games.
+
+Source code for the exercise:
+#+begin_src julia :export false
+using Distributions
+winningprob(n,k,p) = sum(pdf(Binomial(n,p), i) for i in k:n)
+
+# 1. p = 0.5, n = 7, k = 4, thus Pr(X>=k) =
+winningprob(7,4,0.5)
+
+# 2. p = 0.5, n = 6, k = 4, thus Pr(X>=k) =
+winningprob(6,4,0.5)
+
+# 3. p = 0.5, n = 5, k = 3, thus Pr(X>=k) =
+winningprob(5,3,0.5)
+
+# 4.  p = 0.5, n = 4, k = 3, thus Pr(X>=k)
+winningprob(4,3,0.5)
+
+# 5. p = 0.5, n = 3, k = 3, thus Pr(X>=k) =
+winningprob(3,3,0.5)
+
+#+end_src
+
+
+* Them 3.7
+
+** 1
+*** a
+I should bet red. The previous round has no effect on the subsequent round, and as such one should choose red as it has the highest probability of showing up.
+*** b
+On average I would expect to win 80 dollars (200 * 0.6 - 100*0.4)
+** 2
+*** a
+Same as 1.a. I should bet red.
+*** b
+Same as 1.b. I would expect to win 80 dollars.
+** 3
+Yes, it does. My chance of winning is consistently bigger than my chance of losing.
+
+** 4
+I should bet white. The expected payoff is 35 * 0.1 - 2*0.9 = 1.7, while the expected payoff of the other colors is 0.8.
