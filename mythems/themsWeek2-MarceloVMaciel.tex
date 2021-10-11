@@ -1,0 +1,179 @@
+% Created 2021-10-10 dom 20:59
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{jlcode}
+\author{Marcelo Veloso Maciel}
+\date{\today}
+\title{Take home exam - Week2-  Marcelo Veloso Maciel}
+\hypersetup{
+ pdfauthor={Marcelo Veloso Maciel},
+ pdftitle={Take home exams Week2 Marcelo Veloso Maciel},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.2 (Org mode 9.5)},
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+
+
+
+\section*{Them 3.1}
+\label{sec:orgfc61e77}
+\subsection*{1}
+\label{sec:org66a858a}
+They are comparing the whole group, men, average with a subgroup average which was already considered when calculating the entire group average. A better comparison would be between the subgroup of orchestra conductors versus its complement.  Nevertheless, the comparison would still be fraught with difficulties and would require some matching between the units of those two groups.
+\subsection*{2}
+\label{sec:org943f453}
+There are confounders. The argument is that orchestra conducting has an effect on life expectancy. However, if you remember that social class has an impact on the probability of being an orchestra conductor and on life expectancy, the previous causal relationship between orchestra conducting and life expectancy will likely turn out to be spurious. Thus, I would control for this confounder. A regression that added the variable 'social class' would likely suffice.
+
+\section*{Them 3.2}
+\label{sec:orgcab4d74}
+\subsection*{1}
+\label{sec:org01734cc}
+(0.99 * 0.8) + (0.01 * 0.1) = 0.793
+\subsection*{2}
+\label{sec:orgad4178e}
+(0.001)/0.793 = 0.00126
+\subsection*{3}
+\label{sec:org0544646}
+In the text it seems to be P(I|A) =
+(0.009)/(0.198 + 0.009)= 0.043; in the hint, it says that what is being asked is P(A|I), which is given in the problem statement: given that the Judge considers someone is innocent, the probability of someone being acquitted is 0.9.
+\section*{Them 3.3}
+\label{sec:orgc85bc02}
+I'll do both parts at the same time. Missing in those tables is the proportion of papers that got rejected per field. Though 38\% of the papers that got accepted were about comparative politics, it is possible that the volume of papers submitted in this area is very high. On the other hand, though formal theory only accounts for 3\% of the accepted papers by field, the volume of papers submitted in this field is likely to be very low compared to other areas. All in all, what would I choose given the information in the tables? For each observation, I would need to input the missing rejection information. Then I would multiply the probability of being accepted by the ratio of each field/approach. Given that the discipline focuses on the three main fields (comparative/national politics / international relations) and mostly trains quantitative researchers, I believe that a combination of Normative Theory or Formal Theory field and Formal or Interpretive approach would be a safer bet.
+
+\section*{Them 3.4}
+\label{sec:org0cdf171}
+
+\begin{enumerate}
+\item p = 0.5, n = 7,  k = 4, thus Pr(X>=k) = 0.5
+\item p = 0.5, n = 6, k = 4,  thus Pr(X>=k) = 0.344
+\item p = 0.5, n = 5, k = 3, thus Pr(X>=k) = 0.5
+\item p = 0.5, n = 4, k = 3, thus Pr(X>=k) = 0.313
+\item p = 0.5, n = 3, k = 3, thus Pr(X>=k) = 0.125
+\item The probability is zero. They have already lost 4 games.
+\end{enumerate}
+
+Source code for the exercise:
+\begin{jllisting}
+using Distributions
+winningprob(n,k,p) = sum(pdf(Binomial(n,p), i) for i in k:n)
+
+# 1. p = 0.5, n = 7, k = 4, thus Pr(X>=k) =
+winningprob(7,4,0.5)
+
+# 2. p = 0.5, n = 6, k = 4, thus Pr(X>=k) =
+winningprob(6,4,0.5)
+
+# 3. p = 0.5, n = 5, k = 3, thus Pr(X>=k) =
+winningprob(5,3,0.5)
+
+# 4.  p = 0.5, n = 4, k = 3, thus Pr(X>=k)
+winningprob(4,3,0.5)
+
+# 5. p = 0.5, n = 3, k = 3, thus Pr(X>=k) =
+winningprob(3,3,0.5)
+
+\end{jllisting}
+
+
+\section*{Them 3.7}
+\label{sec:orgf63a2bf}
+
+\subsection*{1}
+\label{sec:orge852ef2}
+\subsubsection*{a}
+\label{sec:orgcb9ac27}
+I should bet red. The previous round has no effect on the subsequent round, and as such one should choose red as it has the highest probability of showing up.
+\subsubsection*{b}
+\label{sec:orgf8511ed}
+On average I would expect to win 80 dollars (200 * 0.6 - 100*0.4)
+\subsection*{2}
+\label{sec:org735016c}
+\subsubsection*{a}
+\label{sec:orgbd16961}
+Same as 1.a. I should bet red.
+\subsubsection*{b}
+\label{sec:org402d054}
+Same as 1.b. I would expect to win 80 dollars.
+\subsection*{3}
+\label{sec:org2d57e29}
+Yes, it does. My chance of winning is consistently bigger than my chance of losing.
+
+\subsection*{4}
+\label{sec:org59d378c}
+I should bet white. The expected payoff is 35 * 0.1 - 2*0.9 = 1.7, while the expected payoff of the other colors is 0.8.
+
+\section*{Them 3.8}
+\label{sec:org2caaa2e}
+I do not understand how to translate this question into a decision tree.
+
+
+\section*{Them 3.9}
+\label{sec:orgeb4238a}
+I imputed the ties as the same as the other house (if tie in ``House'' uses the value ``Senate'' and vice-versa).
+The pivot table below shows that when the president is a democrat, the proportion of democrat houses is indeed much higher. The direction is the same for republican presidents, but the effect size is way smaller. However, to affirm that, one would need a proper statistical test (maybe a t-test?).
+\begin{verbatim}
+Pres / House │        D         R
+─────────────┼───────────────────
+D            │ 0.344262  0.131148
+R            │ 0.245902  0.278689
+\end{verbatim}
+
+Source code for the exercise:
+\begin{jllisting}
+using DataFrames
+import FreqTables as Freq
+using RCall
+@rlibrary readxl
+data2= DataFrame(rcopy(read_excel("them3.9.xlsx", sheet = "Sheet3", skip=1 )))
+
+f = Freq.freqtable(data2, :Pres, :House)
+Freq.prop(f)
+\end{jllisting}
+
+\section*{Them 4.1}
+\label{sec:orge221fe1}
+On the first plot, one sees two patterns: the American death rate is much higher than the OECD general pattern. Moreover, it has been declining. I don't know enough about American society to concoct a hypothesis for the second pattern. Still, the first could be the following: the more lenient the gun permit laws of a country, the higher its death rate.
+
+For the second plot, there are three patterns. First, the higher the population, the lower the proportion of covid first dose. Second, the higher the population, the lower the republican vote share. Third, the higher the republican vote share, the lower the proportion of covid first dose. An ambitious hypothesis for the second pattern could be: the higher the urban complexity of a place, the lower the conservative values within that place. Urban complexity is associated with higher population sizes, and that is a hypothesis in itself, with higher adhesion to cultural liberal values, which leads to lower votes to republicans.
+
+
+\section*{Them 4.2}
+\label{sec:org4423300}
+It depends on how much a student values the minor. It is analogous to elasticity. If a student deems it too costly to take another course in political science to get the minor, he can switch to another minor. So, adding one new course may or may not lead a single student to leave the minor. Call that the elasticity of getting the minor. If the average student's choice to remain to pursue the minor is inelastic to the addition of new courses, the new requirement will indeed lead to more political science courses being taken. Suppose the average student choice of pursuing the minor is elastic to the addition of new courses. In that case, the new requirement may backfire and lead to even fewer undergraduate students taking political science courses since the average student will simply cease taking classes in political science, given that it has switched to another minor.
+
+\section*{Them 4.3}
+\label{sec:org0a0e520}
+The case in which both are not using a mask. This case would likely show a very high contagion probability, which would dissuade people from not using a mask for two reasons: they would infect others with a high probability if they are infected, and they would get infected by another infected person with a high probability too.
+
+\section*{Them 4.4}
+\label{sec:org00fd642}
+It seems to be again a binomial distribution problem. If we let \(p  = 0.5\) and \(n = 120\) and \(k = 60\) then \(P(k=60) = 0.073\)
+
+\begin{jllisting}
+using Distributions
+
+pdf(Binomial(120,0.5), 60) # =>    0.07268497891011672
+\end{jllisting}
+
+\section*{Them 4.5}
+\label{sec:orgc0e2441}
+
+It is harder to detect cancer in women with dense breasts because the proportion of women with dense breasts is low. However, within this subsample, the proportion of women whose identified death cause was cancer is greater than in the set of women with non-dense breasts. Thus, it is harder to detect while being more likely.
+\end{document}
