@@ -25,7 +25,7 @@ I'll do both parts at the same time. Missing in those tables are the proportion 
 3. p = 0.5, n = 5, k = 3, thus Pr(X>=k) = 0.5
 4. p = 0.5, n = 4, k = 3, thus Pr(X>=k) = 0.313
 5. p = 0.5, n = 3, k = 3, thus Pr(X>=k) = 0.125
-6. the probability is zero. They have already lost 4 games.
+6. The probability is zero. They have already lost 4 games.
 
 Source code for the exercise:
 #+begin_src julia :export false
@@ -67,3 +67,39 @@ Yes, it does. My chance of winning is consistently bigger than my chance of losi
 
 ** 4
 I should bet white. The expected payoff is 35 * 0.1 - 2*0.9 = 1.7, while the expected payoff of the other colors is 0.8.
+
+* Them 3.8
+1. :
+  a. p(CVAP|Hispanic) \(\neq\) p(CVAP|non-Hispanic)
+  b. p(being registered|(Hispanic and CVAP)) \(\neq\) p(being registered|(non-Hispanic and CVAP))
+  c. p(voting|(Hispanic and registered)) \(\neq\) p(voting|(non-Hispanic and registered)
+2. I don't quite understand the question in general.
+
+
+* Them 3.9
+I could not get the table from the slide.
+
+* Them 4.1
+On the first plot one sees two patters: the american death rate is much higher than the OECD general pattern. Moreover, it has been declining. I don't know enough about the american society to concoct an hypothesis for the second pattern, but the first could be the following: the more lenient the gun permit laws of a country the higher its death rate.
+
+For the second plot there are three patterns. The higher the population the lower the proportion of covid first dose. The higher the population the lower the republican vote share. The higher the republican vote share the lower the proportion of covid first dose. An ambitious hypothesis for the second pattern could be: the higher the urban complexity of a place the lower the conservative values within that place. Urban complexity is associated with higher population sizes, but also, and that is an hypothesis in itself, with higher adhesion to cultural liberal values, which leads to lower votes to republicans.
+
+
+* Them 4.2
+It depends on how much a student values the minor. It is analogous to elasticity. If a student deems too costly to take another course in political science to get the minor he can simply switch to another minor. So, the addition of one new course may or may not lead a single student to leave the minor. Call that the elasticity of getting the minor. If the average student choice to remain pursuing the minor is inelastic to the addition of new courses the new requirement will indeed lead to more political science courses being taken. If the average student choice of pursuing the minor  is elastic to the addition of new courses then the new requirement may backfire and lead to even less undergraduate students taking political science courses, since the average student will simply cease taking *any* courses in political, given that it has switched to another minor.
+
+* Them 4.3
+The case in which both are not using a mask. This case would likely show a very high contagion probability, which would dissuade people from not using a mask for two reasons: they would infect others with a high probability if they are infected and they would get infected by another infected person with a high probability too.
+
+* Them 4.4
+It seems to be again a binomial distribution problem. If we let \(p  = 0.5\) and \(n = 120\) and \(k = 60\) then \(P(k=60) = 0.073\)
+
+#+begin_src julia
+using Distributions
+
+pdf(Binomial(120,0.5), 60) # =>    0.07268497891011672
+#+end_src
+
+* Them 4.5
+
+It is harder to detect cancer in women with dense breasts because the proportion of women with dense breasts is low. However, within this subsample the proportion of women whose identified death cause was cancer is greater than in the set of women with non-dense breasts. Thus, it is harder to detect while being more likely.
