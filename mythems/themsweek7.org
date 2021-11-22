@@ -1,0 +1,39 @@
+#+TITLE: Themsweek7
+
+* Them 13.2
+
+A.  What is the probability that someone who is a spy will be labeled a spy?
+   If we are being asked \(P(D|S)\) where D is detected I think it is simply 0.8. If I'm mixing things up and we are actually being  asked to find P(S|D) then
+\(P(S|D) = {{P(D|S)P(S)} \over {P(D)}} = {{0.8 * {10 \over 10000}} \over {{8 + 1606}\over 10000}} \approx 0.005\).
+B.  What is the probability that someone who is not spy will be labeled not a spy?
+   \(8394/9990 \approx 0.84\).
+C.  Are these two probabilities the same?
+   No.
+D.  What proportion of those labeled as spies are actually spies?
+   \(8/1614 \approx 0.005\).
+E. What proportion of those labeled as not spies are actually not spies?
+   \(8394/8396 \approx 0.999\).
+* Them 15.7
+1. The fine arts, with a ccdf of 0.272.
+2. Row Above = 0.162; Row Below = 0.198;
+3. Biological sciences. 75 students.
+4. Row Above = 67; Row below = 21.
+
+#+begin_src julia
+proportions = [ccdf(Normal(x["Average GPA"],
+                           x["stdeviationGPA"]), 3.25)
+               for x in eachrow(dataw7)]
+argmax(proportions)
+
+honors_number=[x["Count of GPA"] *  ccdf(Normal(x["Average GPA"],
+                                            x["stdeviationGPA"]), 3.25)
+               for x in eachrow(dataw7)]
+argmax(honors_number)
+#+end_src
+* Them 17.4
+
+1. Hypothesis
+  - H1: The older one gets the higher the probability of dying from falling;
+  - H2: Among the vaccinated you are more likely to die from covid if you are from  80+ subgroup  than if you are from  the 65-79 subgroup;
+  - H3: Among the non-fully vaccinated the 80+ subgroup is muchj more likely to die of covid than the 65-79 subgroup
+2. The third one in particular, due to the big sample, which makes statistical significance more likely, and big noticeable difference between the two subgroups.

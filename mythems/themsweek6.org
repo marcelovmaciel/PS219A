@@ -1,0 +1,48 @@
+#+TITLE: Themsweek6
+* THEM 12.1
+Avg Speed = Distance / Time. Thus, \({2 \over {{1 \over 2} + {1 \over 6} } } = 3\).
+
+* THEM 13.14
+In general, P(A or B) = P(A) + P(B) - P(A and B), but since A and B are mutually
+exclusive we know that P(A and B) = 0. Thus, P(A or B) = P(A) + P(B), for
+mutually exclusive A and B.
+
+
+* THEM 18.13
+
+** a
+If I set the expected value as f(x) = 122 * x / 366, where x is the number of days in the month, and run a chisquared test I get the following result:
+#+begin_src  txt
+X-squared = 37.156, df = 22, p-value = 0.02274
+#+end_src
+Thus, we can reject the null hypothesis that the lottery was fair.
+# I coded my own chisquared test with expected value depending on the number of days for each month, then ran it for each column. In none of them I got a significant result for unfairness in the lottery.
+# #+begin_src julia
+
+
+# puredata = select(data, Not(:___1)) |> dropmissing
+# firstthird = dropmissing(data)[!,"1-122"]
+# secondthird = dropmissing(data)[!,"123-244"]
+# thirdthird = dropmissing(data)[!,"244-366"]
+
+# E = map(x->122*x/366, [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31])
+
+
+# function chisquare_pvalue(col,e= E)
+#     test_statistic = sum(((col .-e).^2)./e)
+
+#     pvalue = ccdf(Chisq(length(col)-1),test_statistic)
+#     return(test_statistic,pvalue)
+# end
+
+
+# chisquare_pvalue(firstthird)
+# ChisqTest(firstthird .|> Int,  normalize(E,1))
+# chisquare_pvalue(secondthird)
+# chisquare_pvalue(thirdthird)
+# #+end_src
+# This seems wrong and I don't know where I've gone wrong in the code. If I put the same expected value and the whole matrix in the chisquare test function in R, via interoperability, it does give me  a significant result, but it gives me the same p-value  without the expected value being inputted. That is, I do not understand what the R procedure is doing, and the code I wrote for scratch seems to be giving the wrong result.
+
+
+** b
+17/31 + 10/31 * 0.2 = 0.61.

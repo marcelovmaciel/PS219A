@@ -69,15 +69,11 @@ Yes, it does. My chance of winning is consistently bigger than my chance of losi
 I should bet white. The expected payoff is 35 * 0.1 - 2*0.9 = 1.7, while the expected payoff of the other colors is 0.8.
 
 * Them 3.8
-1. :
-  a. p(CVAP|Hispanic) \(\neq\) p(CVAP|non-Hispanic)
-  b. p(being registered|(Hispanic and CVAP)) \(\neq\) p(being registered|(non-Hispanic and CVAP))
-  c. p(voting|(Hispanic and registered)) \(\neq\) p(voting|(non-Hispanic and registered)
-2. I don't quite understand the question in general.
+I do not understand how to translate this question into a decision tree.
 
 
 * Them 3.9
-I could not get the table from the slide.
+I could not get the table from the slide. I tried many ways.
 
 * Them 4.1
 On the first plot one sees two patters: the american death rate is much higher than the OECD general pattern. Moreover, it has been declining. I don't know enough about the american society to concoct an hypothesis for the second pattern, but the first could be the following: the more lenient the gun permit laws of a country the higher its death rate.

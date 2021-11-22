@@ -1,4 +1,6 @@
 # * Imports
+import Pkg
+Pkg.activate("../")
 using DataFrames, DataFramesMeta, Distributions
 using FloatingTableView
 #using GLMakie

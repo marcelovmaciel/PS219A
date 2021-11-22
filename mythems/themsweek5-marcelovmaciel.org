@@ -1,0 +1,106 @@
+#+TITLE: Thems Week5 -  Marcelo V. Maciel
+
+* Them 7.3
+** 2
+I should use a one-tailed test, because I have a direction in mind: "women's
+singing time is bigger than men's singing time"
+** 3
+A difference of means test, such as an one-tailed t-test.
+** 4
+Using a one tailed t-test for men's mean being smaller than women's mean we get
+the following:
+#+begin_src txt
+        Welch Two Sample t-test
+
+data:  singing by group
+t = -1.9329, df = 17.874, p-value = 0.03462
+alternative hypothesis: true difference in means between group Man and group Woman is less than 0
+95 percent confidence interval:
+      -Inf -1.354288
+sample estimates:
+  mean in group Man mean in group Woman
+            98.0000            111.208
+#+end_src
+Seeing that the t statistic is -1.9329 and p-value = 0.03462 we can conclude
+that the null hypothesis can be rejected. I would take the conclusion with a
+grain of salt, though. The selection of songs is not clear from the picture and
+the number of men in the sample is less than half the number of women.
+
+* Them 8.1
+** 1
+#+begin_src txt
+Pearson's Chi-squared test with Yates' continuity correction
+
+data:  `#JL`$f
+X-squared = 3.1144, df = 1, p-value = 0.0776
+#+end_src
+Given the high p-value I would not reject the hypothesis that presidential
+success is unrelated to party control of the House.
+
+** 2
+
+#+begin_src txt
+
+        Pearson's Chi-squared test with Yates' continuity correction
+
+data:  `#JL`$f2
+X-squared = 10.696, df = 1, p-value = 0.001073
+
+#+end_src
+Given the low p-value I would reject the hypothesis that presidential success is
+unrelated to party control of the Senate.
+
+
+** 3
+The problem is that senate elections are each 6 years, so there is a mismatch
+between the timing between the two elections! This means that even though we
+have statistical significance the association is likely spurious.
+
+* Them 8.8
+
+
+When I run paired t-tests between 2014 and 2016 and between
+
+
+
+
+I'll run a chi-test on each table. This does not seem to be correct, but I don't
+know what else should I do. First, I run a chi-squared test on each table:
+#+begin_src  txt
+        Pearson's Chi-squared test
+
+data:  `#JL`$them88_df_catalist
+X-squared = 1.0023, df = 6, p-value = 0.9855
+        Pearson's Chi-squared test
+
+data:  `#JL`$them88_df_exit
+X-squared = 1.8975, df = 6, p-value = 0.9289
+#+end_src
+Given the high p-value in both datasets we cannot reject the null hypothesis
+that the difference in observation between years is due to chance alone.
+
+I can also do a two-sample chi-test for each pair of columns in the pair of
+datasets to check whether they come from the same distribution.
+#+begin_src txt
+
+        Pearson's Chi-squared test
+
+data:  cbind(`#JL`$`(them88_df_catalist.year_14)`, `#JL`$`(them88_df_exit.year_14)`)
+X-squared = 0.82813, df = 3, p-value = 0.8427
+
+        Pearson's Chi-squared test
+
+data:  cbind(`#JL`$`(them88_df_catalist.year_16)`, `#JL`$`(them88_df_exit.year_16)`)
+X-squared = 0.71655, df = 3, p-value = 0.8693
+
+        Pearson's Chi-squared test
+
+data:  cbind(`#JL`$`(them88_df_catalist.year_18)`, `#JL`$`(them88_df_exit.year_18)`)
+X-squared = 1.1314, df = 3, p-value = 0.7695
+#+end_src
+Given the high p-value we can't reject the hypothesis that the observations came
+from the same underlying distribution and the observed differences are due to
+chance.
+
+* Them 8.9
+Seems to be the same as them 8.1.

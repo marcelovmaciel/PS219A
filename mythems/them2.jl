@@ -1,6 +1,11 @@
 import Pkg
 Pkg.activate("../scripts/PS2019A")
-using Distributions
+using DataFrames,Distributions
+import FreqTables as Freq
+using FloatingTableView
+using RCall
+
+@rlibrary readxl
 
 ((0.99 * 0.8)
 + (0.01 * 0.1)
@@ -30,9 +35,25 @@ winningprob(3,3,0.5)
 
 2 * 0.6 - 1 * 0.4
 
-
-(200 * 0.6 - )
-
 35 * 0.1 - 2*0.9
 
 (35 * 100 * 0.1)
+
+
+# * 3.8
+0.1/0.15
+0.06/0.1
+
+# * Them 4.4
+pdf(Binomial(120,0.5), 60)
+
+
+# * Them 3.9
+using DataFrames
+import FreqTables as Freq
+using RCall
+@rlibrary readxl
+data2= DataFrame(rcopy(read_excel("them3.9.xlsx", sheet = "Sheet3", skip=1 )))
+
+f = Freq.freqtable(data2, :Pres, :House)
+Freq.prop(f)

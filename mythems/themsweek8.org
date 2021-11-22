@@ -1,0 +1,52 @@
+#+TITLE: Thems Week8
+
+* Them 16.4
+** Biden outperforms Senators in swing states, underperforms in VA, NH, RI
+I don't see how this is evidence of fraud, maybe I am missing something specific
+about american politics. Even if there is something counter-intuitive here it
+may simply be due to chance. To argue that this pattern is fraud would require
+at least demonstrating that it is not due to chance, or that it cannot be
+explained away by a proper causal narrative.
+
+** Biden underperforms Hillary/Obama in cities, except in MI, PA, GA, WI
+If he underperforms in cities he might outperform them in the countryside. No
+contradiction here.
+
+** Biden mail-in dumps with 100% margins
+I suppose democrats vote more by mail, at least that is what I got taking a look
+at american newspapers, and also democrats could be more concerned about the
+pandemic strengthening this tendency. It is not unlikely that in some places
+this leads to a 100% margin in mail-in votes.
+
+** Joe Frazier voted in Pittsburgh event though he died four years ago.
+It could be a person with the same name? Hard to tell without more information.
+
+* Them 19.1
+A causal chain can be the following: places in which Trump has been more
+successful in influencing citizens are places in which people expose themselves
+more, since he is a well known denialist (negationist?), which leads to higher
+covid death rates. Thus, the place don't even need to have always been
+conservative. The only requirement is that an opinion dynamics in favor of Trump
+has happened in that location which explains both the covid death rate and the
+voting pattern.
+
+* Them  19.2
+** a
+The regression line shows almost a textbook definition of positive relationship
+between the variables. That is, if one tries to establish a linear relationship
+that minimizes the distance between points and the line we see that there is a
+positive relationship between heat and homicides.
+
+** b
+No, because this is a Nicholas Cage causes people to drown by a falling in a
+pool example ([[https://www.tylervigen.com/spurious-correlations][Spurious Correlations]]): a spurious correlation. It is a
+correlation without credible mechanism.
+
+** c
+An easy way out is wonder about the representativeness of the sample. Maybe
+there is some sample bias in which hotter places were by mere chance more
+violent in this sample, or colder places less violent. Supposing it is
+representative we can come up with a resource curse explanation: hotter places
+are historically less developed here in the United States (trivia, this is true
+in Brazil due to myriad of historical accidents with roots in the colonial period)
+which lead to higher homicide rates.
